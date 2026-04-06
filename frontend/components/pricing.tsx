@@ -9,8 +9,8 @@ import { useGSAP } from "@gsap/react";
 
 const plans = [
   {
-    name: "Standard",
-    price: "Rs. 0",
+    name: "Free",
+    price: "$0",
     period: "Forever",
     description: "Essential medical AI for individuals.",
     features: [
@@ -24,9 +24,9 @@ const plans = [
     icon: <Shield className="w-5 h-5" />,
   },
   {
-    name: "Professional",
-    price: "Rs. 349",
-    period: "Monthly",
+    name: "Pro",
+    price: "$50",
+    period: "Per Month",
     description: "Advanced health monitoring & analytics.",
     features: [
       "Unlimited report processing",
@@ -41,8 +41,8 @@ const plans = [
   },
   {
     name: "Enterprise",
-    price: "Rs. 599",
-    period: "Monthly",
+    price: "$100",
+    period: "Per Month",
     description: "Complete family wellness infrastructure.",
     features: [
       "Multi-member profiles (up to 5)",
