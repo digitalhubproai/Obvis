@@ -11,7 +11,7 @@ import {
   Pill, HeartPulse, Lightbulb, AlertCircle, FileText, FileDown,
   Sparkles, Activity, Zap, Stethoscope, Eye, BarChart3, Plus,
   Search, Filter, TrendingUp, FolderOpen, Users, Menu,
-  Send, Bot, User,
+  Send, Bot, User, Crown,
 } from "lucide-react";
 import { Logo } from "@/components/logo";
 import {
@@ -285,6 +285,49 @@ function calcHealthScore(analysis: Analysis): number {
 const staggerContainer: Variants = { hidden: {}, visible: { transition: { staggerChildren: 0.08 } } };
 const fadeInUp: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } } };
 
+/* ─── Pro Upsell Banner ─── */
+function ProUpsell({ used, limit }: { used: number; limit: number }) {
+  const pct = Math.round((used / limit) * 100);
+  return (
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+      className="rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-amber-500/5 border border-amber-500/15 p-5 mb-6 relative overflow-hidden"
+    >
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div className="flex items-center gap-3 flex-1">
+          <div className="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center shrink-0">
+            <Crown className="w-5 h-5 text-amber-400" />
+          </div>
+          <div>
+            {used >= limit ? (
+              <>
+                <p className="text-sm font-semibold text-amber-300">Free tier exhausted — upgrade to Pro</p>
+                <p className="text-xs text-slate-500 mt-0.5">You used all {limit} free report analyses. Unlock unlimited reports with Pro.</p>
+              </>
+            ) : (
+              <>
+                <p className="text-sm font-semibold text-amber-300">Free tier: {used}/{limit} reports used</p>
+                <p className="text-xs text-slate-500 mt-0.5">{limit - used} free {(limit - used) === 1 ? "report" : "reports"} remaining. Upgrade to Pro for unlimited analyses.</p>
+              </>
+            )}
+          </div>
+        </div>
+        <a href="/#pricing"
+          className="shrink-0 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-semibold shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all"
+        >
+          Upgrade to Pro — $50/mo
+        </a>
+      </div>
+      {/* Progress bar */}
+      <div className="mt-3 h-1.5 bg-white/5 rounded-full overflow-hidden">
+        <motion.div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-orange-500"
+          initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 1, ease: "easeOut" }}
+        />
+      </div>
+      <div className="mt-1 text-[10px] text-slate-600">{pct}% of free tier used</div>
+    </motion.div>
+  );
+}
+
 /* ========================================================================= */
 /*                             MAIN DASHBOARD                                */
 /* ========================================================================= */
@@ -414,6 +457,9 @@ export default function DashboardPage() {
   const totalReports = reports.length;
   const completedReports = reports.filter((r) => r.status === "completed").length;
   const pendingReports = reports.filter((r) => r.status === "pending").length;
+  const FREE_TIER_LIMIT = 3;
+  const freeReportsUsed = Math.min(completedReports, FREE_TIER_LIMIT);
+  const isFreeTier = completedReports < FREE_TIER_LIMIT;
   const avgHealth = useMemo(() => {
     const scores = Object.values(analyses).map(calcHealthScore).filter(Boolean);
     return scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
@@ -551,6 +597,10 @@ export default function DashboardPage() {
               <motion.div key="overview" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
                 {/* Biometric Hero Section */}
                 <HealthHero score={avgHealth || 0} />
+
+                {/* Pro Upsell Banner */}
+                {!isFreeTier && <ProUpsell used={FREE_TIER_LIMIT} limit={FREE_TIER_LIMIT} />}
+                {isFreeTier && completedReports > 0 && <ProUpsell used={freeReportsUsed} limit={FREE_TIER_LIMIT} />}
 
                 {/* Stat Cards */}
                 <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -733,6 +783,10 @@ export default function DashboardPage() {
             {/* ═══════════ REPORTS TAB ═══════════ */}
             {activeTab === "reports" && (
               <motion.div key="reports" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
+                {/* Pro Upsell Banner */}
+                {isFreeTier && completedReports > 0 && <ProUpsell used={freeReportsUsed} limit={FREE_TIER_LIMIT} />}
+                {!isFreeTier && <ProUpsell used={FREE_TIER_LIMIT} limit={FREE_TIER_LIMIT} />}
+
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                   <div className="flex items-center gap-3 flex-1 w-full sm:w-auto">
@@ -743,18 +797,27 @@ export default function DashboardPage() {
                       />
                     </div>
                   </div>
-                  <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                    onClick={() => fileInputRef.current?.click()} disabled={uploading}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 text-white text-sm font-medium shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30 transition-all disabled:opacity-50"
-                  >
-                    {uploading ? (
-                      <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full" />
-                    ) : (
-                      <Plus className="w-4 h-4" />
-                    )}
-                    {uploading && uploadProgress ? uploadProgress.message : "Upload Report"}
-                    {uploading && uploadProgress && <span className="text-[10px] opacity-70">{uploadProgress.progress}%</span>}
-                  </motion.button>
+                  {/* Upload button — blocked when free tier exceeded */}
+                  {isFreeTier ? (
+                    <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                      onClick={() => fileInputRef.current?.click()} disabled={uploading}
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-500 text-white text-sm font-medium shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30 transition-all disabled:opacity-50"
+                    >
+                      {uploading ? (
+                        <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full" />
+                      ) : (
+                        <Plus className="w-4 h-4" />
+                      )}
+                      {uploading && uploadProgress ? uploadProgress.message : "Upload Report"}
+                      {uploading && uploadProgress && <span className="text-[10px] opacity-70">{uploadProgress.progress}%</span>}
+                    </motion.button>
+                  ) : (
+                    <a href="/#pricing"
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-medium shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 transition-all"
+                    >
+                      <Crown className="w-4 h-4" /> Upgrade to Pro
+                    </a>
+                  )}
 
                   {/* Upload Progress Modal */}
                   <AnimatePresence>

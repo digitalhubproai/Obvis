@@ -15,15 +15,11 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Obvis API", version="1.0.0", lifespan=lifespan)
 
 # CORS
+origins = [o.strip() for o in settings.allowed_origins.split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://0.0.0.0:3000",
-        "https://obvis-yyes.vercel.app",
-        "https://creativesar-obvisback.hf.space",
-    ],
+    allow_origins=origins or ["*"],
+    allow_origin_regex=r"https://.*\.hf\.space|https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
