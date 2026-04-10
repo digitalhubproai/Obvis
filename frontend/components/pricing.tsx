@@ -192,7 +192,7 @@ function TiltCard({
 
 export function Pricing() {
   return (
-    <section id="pricing" className="relative py-24 md:py-40 bg-[#020617] overflow-hidden">
+    <section id="pricing" className="relative py-16 sm:py-20 md:py-28 lg:py-40 bg-[#020617] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-20 md:mb-32 section-header">
           <div className="text-sky-400 text-xs font-bold uppercase tracking-[0.3em] mb-4">

@@ -229,7 +229,7 @@ export function Hero() {
         </motion.div>
 
         {/* Headline */}
-        <div className="relative mb-8 max-w-[1000px] mx-auto">
+        <div className="relative mb-6 sm:mb-8 max-w-[1000px] mx-auto px-2">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -290,7 +290,7 @@ export function Hero() {
         </div>
 
         {/* Subtitle */}
-        <div className="h-[60px] flex items-center justify-center mb-10">
+        <div className="flex items-center justify-center mb-8 sm:mb-10 min-h-[50px] sm:min-h-[60px]">
           <AnimatePresence mode="wait">
             <motion.p
               key={current}

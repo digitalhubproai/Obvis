@@ -345,7 +345,7 @@ export default function DashboardPage() {
   const [expandedReport, setExpandedReport] = useState<string | null>(null);
   const [detailTab, setDetailTab] = useState<"summary" | "values" | "precautions">("summary");
   const [downloading, setDownloading] = useState<"original" | "analysis" | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [dragOver, setDragOver] = useState(false);
 
@@ -495,8 +495,8 @@ export default function DashboardPage() {
       {/* BG Elements */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="dashboard-grid-pattern absolute inset-0" />
-        <div className="dashboard-glow-orb" style={{ width: 500, height: 500, top: "-10%", left: "-5%", background: "radial-gradient(circle, rgba(14,165,233,0.08), transparent 70%)" }} />
-        <div className="dashboard-glow-orb" style={{ width: 400, height: 400, bottom: "-10%", right: "-5%", background: "radial-gradient(circle, rgba(99,102,241,0.06), transparent 70%)" }} />
+        <div className="dashboard-glow-orb w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px]" style={{ top: "-10%", left: "-5%", background: "radial-gradient(circle, rgba(14,165,233,0.08), transparent 70%)" }} />
+        <div className="dashboard-glow-orb w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] lg:w-[400px] lg:h-[400px]" style={{ bottom: "-10%", right: "-5%", background: "radial-gradient(circle, rgba(99,102,241,0.06), transparent 70%)" }} />
         <DashboardParticles />
       </div>
 
@@ -506,7 +506,7 @@ export default function DashboardPage() {
           <motion.aside
             initial={{ x: -280, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: -280, opacity: 0 }}
             transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
-            className="fixed left-0 top-0 bottom-0 w-[260px] z-40 flex flex-col"
+            className="fixed left-0 top-0 bottom-0 w-[260px] lg:w-[280px] z-40 flex flex-col"
           >
             <div className="flex flex-col h-full m-3 rounded-2xl bg-gradient-to-b from-slate-900/80 to-slate-950/90 backdrop-blur-xl border border-white/[0.06] shadow-2xl shadow-black/40">
               {/* Logo */}
@@ -559,7 +559,7 @@ export default function DashboardPage() {
       </AnimatePresence>
 
       {/* ─── MAIN CONTENT ─── */}
-      <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? "ml-[260px]" : "ml-0"} relative z-10`}>
+      <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? "lg:ml-[260px]" : "ml-0"} relative z-10`}>
         {/* Top Bar */}
         <div className="sticky top-0 z-30 px-6 py-4 flex items-center justify-between backdrop-blur-xl bg-[#020617]/60 border-b border-white/[0.04]">
           <div className="flex items-center gap-4">
@@ -603,12 +603,12 @@ export default function DashboardPage() {
                 {isFreeTier && completedReports > 0 && <ProUpsell used={freeReportsUsed} limit={FREE_TIER_LIMIT} />}
 
                 {/* Stat Cards */}
-                <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
                   {statCards.map((card, i) => (
                     <motion.div key={i} variants={fadeInUp}
                       whileHover={{ y: -6, scale: 1.02 }}
                       data-cursor-text={`VIEW ${card.label.toUpperCase()}`}
-                      className={`stat-card-glow card-shine relative group rounded-2xl bg-gradient-to-br ${card.gradient} backdrop-blur-sm border ${card.border} p-5 cursor-default overflow-hidden magnetic-wrap`}
+                      className={`stat-card-glow card-shine relative group rounded-xl sm:rounded-2xl bg-gradient-to-br ${card.gradient} backdrop-blur-sm border ${card.border} p-3 sm:p-4 lg:p-5 cursor-default overflow-hidden magnetic-wrap`}
                       style={{ "--glow-color": card.glowColor } as React.CSSProperties}
                     >
                       {/* Shimmer */}
@@ -617,15 +617,15 @@ export default function DashboardPage() {
                       </div>
                       <div className="relative z-10 flex items-start justify-between">
                         <div>
-                          <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">{card.label}</p>
-                          <p className="text-3xl font-bold text-white">
+                          <p className="text-[10px] sm:text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">{card.label}</p>
+                          <p className="text-2xl sm:text-3xl font-bold text-white">
                             <AnimatedCount target={card.value} />
-                            {card.suffix && <span className="text-lg text-slate-400 ml-0.5">{card.suffix}</span>}
+                            {card.suffix && <span className="text-sm sm:text-lg text-slate-400 ml-0.5">{card.suffix}</span>}
                           </p>
                           <Sparkline color={card.sparkColor} />
-                          <p className="text-[10px] text-slate-500 mt-1">{card.trend}</p>
+                          <p className="text-[9px] sm:text-[10px] text-slate-500 mt-1">{card.trend}</p>
                         </div>
-                        <div className={`w-10 h-10 rounded-xl ${card.iconBg} flex items-center justify-center ${card.iconColor} group-hover:scale-110 transition-transform duration-300`}>
+                        <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl ${card.iconBg} flex items-center justify-center ${card.iconColor} group-hover:scale-110 transition-transform duration-300`}>
                           {card.icon}
                         </div>
                       </div>
@@ -1288,21 +1288,21 @@ export default function DashboardPage() {
                         </motion.div>
                         <h4 className="text-lg font-bold text-white mb-2 glow-text-blue">Obvis Neural Assistant</h4>
                         <p className="text-xs text-slate-500 max-w-xs mb-8 leading-relaxed">Describe your symptoms or ask about your medical reports for real-time AI insights and health guidance.</p>
-                        <div className="grid grid-cols-2 gap-3 max-w-md w-full">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 max-w-md sm:max-w-lg w-full">
                           {chatSuggestions.map((s, i) => (
-                            <motion.button key={i} 
+                            <motion.button key={i}
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ delay: i * 0.1 }}
-                              whileHover={{ scale: 1.02, backgroundColor: "rgba(168, 85, 247, 0.1)" }} 
+                              whileHover={{ scale: 1.02, backgroundColor: "rgba(168, 85, 247, 0.1)" }}
                               whileTap={{ scale: 0.98 }}
                               onClick={() => { setChatInput(s.text); }}
-                              className="suggestion-chip flex items-center gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] text-xs text-slate-400 hover:text-white hover:border-purple-500/30 transition-all text-left group"
+                              className="suggestion-chip flex items-center gap-2 sm:gap-3 p-2 sm:p-4 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/[0.06] text-xs text-slate-400 hover:text-white hover:border-purple-500/30 transition-all text-left group"
                             >
-                              <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:bg-purple-500/20 transition-colors">
+                              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-lg bg-purple-500/10 flex items-center justify-center shrink-0 group-hover:bg-purple-500/20 transition-colors">
                                 <span className="text-purple-400">{s.icon}</span>
                               </div>
-                              <span className="line-clamp-2 leading-snug">{s.text}</span>
+                              <span className="line-clamp-2 leading-snug text-xs">{s.text}</span>
                             </motion.button>
                           ))}
                         </div>

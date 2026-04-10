@@ -126,9 +126,9 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative py-24 md:py-40 bg-[#020617] overflow-hidden">
+    <section id="faq" className="relative py-16 sm:py-20 md:py-28 lg:py-40 bg-[#020617] overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sky-500/[0.03] blur-[150px] -z-10 rounded-full animate-pulse" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] lg:w-[800px] lg:h-[800px] bg-sky-500/[0.03] blur-[100px] sm:blur-[120px] lg:blur-[150px] -z-10 rounded-full animate-pulse" />
 
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24 section-header">

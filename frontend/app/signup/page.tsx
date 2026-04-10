@@ -32,7 +32,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#020617] flex items-center justify-center p-6 overflow-hidden">
+    <div className="relative min-h-screen bg-[#020617] flex items-center justify-center p-4 sm:p-6 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute top-1/3 left-1/3 w-[500px] h-[500px] bg-sky-500/[0.04] blur-[150px] rounded-full" />
@@ -51,7 +51,7 @@ export default function SignupPage() {
         </div>
 
         {/* Card */}
-        <div className="glass rounded-[2rem] border-white/8 p-8 md:p-10">
+        <div className="glass rounded-2xl sm:rounded-[2rem] border-white/8 p-5 sm:p-6 md:p-10">
           <h1 className="text-2xl font-bold text-white mb-1">Create your account</h1>
           <p className="text-slate-500 text-sm mb-8">Start with 3 free reports — no card needed.</p>
 

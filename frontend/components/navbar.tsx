@@ -105,7 +105,7 @@ export function Navbar() {
             initial={{ opacity: 0, scale: 0.95, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
-            className="absolute top-24 left-4 right-4 glass rounded-3xl p-6 flex flex-col gap-4 md:hidden pointer-events-auto"
+            className="fixed top-20 sm:top-24 left-4 right-4 glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 flex flex-col gap-3 sm:gap-4 md:hidden pointer-events-auto max-h-[calc(100vh-100px)] overflow-y-auto"
           >
             {["Features", "How It Works", "Pricing", "FAQ"].map((item) => (
               <a key={item} href={`#${item.toLowerCase().replace(/\s+/g, "-")}`} onClick={() => setMobileOpen(false)} className="text-lg font-medium text-slate-300 hover:text-white py-2">

@@ -4,10 +4,10 @@ import { Logo } from "./logo";
 
 export function Footer() {
   return (
-    <footer className="bg-[#020617] pt-24 pb-12 border-t border-white/5">
+    <footer className="bg-[#020617] pt-16 pb-8 sm:pt-20 sm:pb-10 md:pt-24 md:pb-12 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6">
         {/* Main Footer Content */}
-        <div className="grid lg:grid-cols-12 gap-16 mb-20">
+        <div className="grid lg:grid-cols-12 gap-8 sm:gap-12 md:gap-16 mb-12 sm:mb-16 md:mb-20">
           {/* Brand Column */}
           <div className="lg:col-span-4 max-w-sm">
             <Logo size="md" className="mb-8" />

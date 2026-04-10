@@ -147,7 +147,7 @@ function TiltCard({ children, className, icon }: { children: React.ReactNode; cl
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="relative py-24 md:py-40 bg-[#020617] overflow-hidden">
+    <section id="how-it-works" className="relative py-16 sm:py-20 md:py-28 lg:py-40 bg-[#020617] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Header Block */}
         <div className="text-center max-w-3xl mx-auto mb-20 md:mb-32 section-header">

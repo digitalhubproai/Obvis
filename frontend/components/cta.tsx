@@ -40,10 +40,10 @@ export function CTA() {
   };
 
   return (
-    <section ref={container} className="relative py-24 md:py-40 bg-[#020617] overflow-hidden">
+    <section ref={container} className="relative py-16 sm:py-20 md:py-28 lg:py-40 bg-[#020617] overflow-hidden">
       {/* Dynamic Background Glow */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-sky-500/10 blur-[180px] animate-pulse" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[600px] lg:h-[600px] rounded-full bg-sky-500/10 blur-[100px] sm:blur-[140px] lg:blur-[180px] animate-pulse" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </div>
 

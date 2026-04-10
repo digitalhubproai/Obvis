@@ -192,10 +192,10 @@ function TiltCard({ children, className, icon }: { children: React.ReactNode; cl
 
 export function Features() {
   return (
-    <section id="features" className="relative py-24 md:py-40 bg-[#020617] overflow-hidden">
+    <section id="features" className="relative py-16 sm:py-20 md:py-28 lg:py-40 bg-[#020617] overflow-hidden">
       {/* Background orbs */}
-      <div className="absolute top-20 left-1/4 w-[500px] h-[500px] bg-sky-500/[0.04] blur-[120px] rounded-full animate-pulse" />
-      <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-indigo-500/[0.04] blur-[100px] rounded-full animate-pulse" />
+      <div className="absolute top-10 sm:top-20 left-1/4 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] bg-sky-500/[0.04] blur-[80px] sm:blur-[100px] lg:blur-[120px] rounded-full animate-pulse" />
+      <div className="absolute bottom-5 sm:bottom-10 right-1/4 w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] lg:w-[400px] lg:h-[400px] bg-indigo-500/[0.04] blur-[60px] sm:blur-[80px] lg:blur-[100px] rounded-full animate-pulse" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section header */}
